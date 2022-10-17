@@ -36,3 +36,6 @@ jobs:
       - name: show that env
         run: echo ${TRAVIS_PULL_REQUEST_SHA}
 
+      - name: mi
+        run: printenv
+     
