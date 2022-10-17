@@ -33,7 +33,7 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.number }}
         run: |
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "GITHUB_PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
       - name: view
         run: |
