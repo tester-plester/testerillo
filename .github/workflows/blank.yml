@@ -36,5 +36,7 @@ jobs:
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
       - name: view
-        run: echo $GITHUB_ENV
-     
+        run: |
+          echo $GITHUB_ENV
+          echo "--------"
+          printenv
