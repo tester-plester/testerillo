@@ -29,16 +29,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: event path.json
-        run: |
-          echo $GITHUB_EVENT_PATH
-          
-      - name: pr number into env
-        run: |
-          jq $GITHUB_EVENT_PATH
-
-      - name: show that env
-        run: echo ${TRAVIS_PULL_REQUEST_SHA}
+      - name: Save PR number
+        env:
+          PR_NUMBER: ${{ github.event.number }}
 
       - name: mi
         run: printenv
