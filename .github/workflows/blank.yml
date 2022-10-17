@@ -32,5 +32,9 @@ jobs:
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.number }}
-        run: printenv
+        run: |
+          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          
+      - name: view
+        run: echo $GITHUB_ENV
      
