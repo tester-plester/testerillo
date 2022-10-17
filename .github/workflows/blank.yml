@@ -32,7 +32,5 @@ jobs:
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.number }}
-
-      - name: mi
         run: printenv
      
