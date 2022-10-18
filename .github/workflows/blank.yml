@@ -37,6 +37,10 @@ jobs:
           
       - name: view
         run: |
+          ls -la
+          echo "|||||||||||||"
+          pwd
+          echo "************"
           echo $GITHUB_ENV
           echo "--------"
           printenv
