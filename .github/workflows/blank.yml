@@ -54,11 +54,14 @@ jobs:
       - run: echo "is push"
         if: ${{github.event_name == 'push'}}
         
-      - run: echo "base_ref is event-name"
+      - run: echo "base_ref is event-name, so the PR will add to event-name"
         if: ${{ github.base_ref == 'event-name' }}
         
       - run: echo "ref_name is event-name"
         if: ${{ github.ref_name == 'event-name' }}
+        
+      - run: echo "base_ref is main, so the PR will add to main branch"
+        if: ${{ github.base_ref == 'main' }}
         
       - name: view
         run: |
