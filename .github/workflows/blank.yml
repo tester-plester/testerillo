@@ -41,7 +41,7 @@ jobs:
           
       - name: testing conditional steps for main
         run: echo "Conditon evaluated to true for main"
-        if: ${{ env.GITHUB_EVENT_NAME == 'push' && (env.GITHUB_BASE_REF == 'main' || env.GITHUB_HEAD_REF == 'main') }}
+        if: ${{ github.event.type == 'push' && (env.GITHUB_BASE_REF == 'main' || env.GITHUB_HEAD_REF == 'main') }}
         
       - name: view
         run: |
