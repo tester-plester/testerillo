@@ -49,7 +49,7 @@ jobs:
             
       - name: testing conditional steps for feature branch push
         run: echo "Conditon evaluated to true for feature branch on push"
-        if: ${{ github.event_name == 'push' && (env.GITHUB_BASE_REF == 'event-name' || env.GITHUB_HEAD_REF == 'event-name') }}
+        if: ${{ github.event_name == 'push' && (github.base_ref == 'event-name' || github.ref_name == 'event-name') }}
         
       - name: view
         run: |
