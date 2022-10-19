@@ -33,10 +33,30 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.number }}
         run: |
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "GITHUB_PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
+      - run: echo "event name is:" ${{ github.event_name }} 
+      - run: echo "event type is:" ${{ github.event.action }} 
+          
+      - name: testing conditional steps for master
+        run: echo "Conditon evaluated to true for master"
+        if: ${{ env.GITHUB_EVENT_NAME == 'push' && (env.GITHUB_BASE_REF == 'master' || env.GITHUB_HEAD_REF == 'master') }}
+          
+      - name: testing conditional steps for main
+        run: echo "Conditon evaluated to true for main"
+        if: ${{ github.event_name == 'push' && (env.GITHUB_BASE_REF == 'main' || env.GITHUB_HEAD_REF == 'main') }}
+        
+            
+      - name: testing conditional steps for feature branch push
+        run: echo "Conditon evaluated to true for feature branch on push"
+        if: ${{ github.event_name == 'push' && (env.GITHUB_BASE_REF == 'event-name' || env.GITHUB_HEAD_REF == 'event-name') }}
+        
       - name: view
         run: |
+          ls -la
+          echo "|||||||||||||"
+          pwd
+          echo "************"
           echo $GITHUB_ENV
           echo "--------"
           printenv
