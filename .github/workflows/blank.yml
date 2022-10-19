@@ -35,6 +35,9 @@ jobs:
         run: |
           echo "GITHUB_PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
+      - run: echo "event name is:" ${{ github.event_name }} 
+      - run: echo "event type is:" ${{ github.event.action }} 
+          
       - name: testing conditional steps for master
         run: echo "Conditon evaluated to true for master"
         if: ${{ env.GITHUB_EVENT_NAME == 'push' && (env.GITHUB_BASE_REF == 'master' || env.GITHUB_HEAD_REF == 'master') }}
