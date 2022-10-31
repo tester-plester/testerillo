@@ -1,3 +1,3 @@
-# The file
+# The Cool file
 
 Description
