@@ -4,7 +4,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "main", "event-name" ]
   pull_request:
     types:
       - opened
@@ -30,10 +30,42 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.number }}
         run: |
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "GITHUB_PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
+      - run: echo "event name is:" ${{ github.event_name }} 
+      - run: echo "event type is:" ${{ github.event.action }} 
+          
+      - name: testing conditional steps for master
+        run: echo "Conditon evaluated to true for master"
+        if: ${{ env.GITHUB_EVENT_NAME == 'push' && (env.GITHUB_BASE_REF == 'master' || env.GITHUB_HEAD_REF == 'master') }}
+          
+      - name: testing conditional steps for main
+        run: echo "Conditon evaluated to true for main"
+        if: ${{ github.event_name == 'push' && (env.GITHUB_BASE_REF == 'main' || env.GITHUB_HEAD_REF == 'main') }}
+        
+            
+      - name: testing conditional steps for feature branch push
+        run: echo "Conditon evaluated to true for feature branch on push"
+        if: ${{ github.event_name == 'push' && (github.base_ref == 'event-name' || github.ref_name == 'event-name') }}
+        
+      - run: echo "is push"
+        if: ${{github.event_name == 'push'}}
+        
+      - run: echo "base_ref is event-name, so the PR will add to event-name"
+        if: ${{ github.base_ref == 'event-name' }}
+        
+      - run: echo "ref_name is event-name"
+        if: ${{ github.ref_name == 'event-name' }}
+        
+      - run: echo "base_ref is main, so the PR will add to main branch"
+        if: ${{ github.base_ref == 'main' }}
+        
       - name: view
         run: |
+          ls -la
+          echo "|||||||||||||"
+          pwd
+          echo "************"
           echo $GITHUB_ENV
           echo "--------"
           printenv
