@@ -33,6 +33,8 @@ jobs:
           
       - name: view
         run: |
+          echo ${{ github.event.repository.name }}
+          echo "***************"
           echo $GITHUB_ENV
           echo "--------"
           printenv
