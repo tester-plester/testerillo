@@ -33,7 +33,7 @@ jobs:
           
       - name: Create docker tag on PR
         if: github.event_name == 'pull_request'
-        run: echo 'DOCKER_TAG=-PR${{ github.event.number }}-B$GITHUB_RUN_NUMBER}' >> $GITHUB_ENV
+        run: echo 'DOCKER_TAG=-PR${{ github.event.number }}-B$GITHUB_RUN_NUMBER' >> $GITHUB_ENV
           
       - name: view
         run: |
