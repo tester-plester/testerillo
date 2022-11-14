@@ -31,9 +31,14 @@ jobs:
         run: |
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           
+      - name: Create docker tag on PR
+        if: github.event_name == 'pull_request'
+        run: echo 'DOCKER_TAG=-PR${{ github.event.number }}-B${{ env.GITHUB_RUN_NUMBER }}' >> $GITHUB_ENV
+          
       - name: view
         run: |
           echo ${GITHUB_REPOSITORY}
+          echo ${DOCKER_TAG}
           echo "***************"
           echo $GITHUB_ENV
           echo "--------"
