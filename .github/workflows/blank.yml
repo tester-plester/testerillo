@@ -38,7 +38,7 @@ jobs:
           fullBranchName = os.environ.get('GITHUB_REF_NAME')
           branchName = fullBranchName.split("/")[-1]
           print(branchName)
-          print(os.environ.get('GITHUB_ENV')
+          print(os.environ.get('GITHUB_ENV'))
           os.environ['BRANCH_NAME'] = branchName
           os.system('echo $BRANCH_NAME > BRANCH_NAME')
           
