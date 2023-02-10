@@ -28,13 +28,20 @@ jobs:
       - name: envs
         run: printenv
         
+      - name: Get branch name
+        shell: python
+        run: |
+          import os
+          fullBranchName = os.environ.get('GITHUB_REF_NAME')
+          branchName = fullBranchName.split("/")[-1]
+          os.environ['BRANCH_NAME'] = branchName
+          
       - name: latest?
         run: |
           if [[ "$GITHUB_REF_NAME" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             export LATEST_TAG='latest'
           else
-            branch=(${${GITHUB_REF_NAME}//\// })
-            export LATEST_TAG="${branch[-1]}-latest"
+            export LATEST_TAG="${BRANCH_NAME}-latest"
           fi
           
           echo "LATEST_TAG:" $LATEST_TAG
