@@ -35,7 +35,7 @@ jobs:
         shell: python
         run: |
           import os
-          fullBranchName = os.environ.get('GITHUB_REF_NAME')
+          fullBranchName = os.environ.get('GITHUB_HEAD_REF')
           branchName = fullBranchName.split("/")[-1]
           print(branchName)
           print(os.environ.get('GITHUB_ENV'))
@@ -44,7 +44,7 @@ jobs:
           
       - name: latest?
         run: |
-          if [[ "$GITHUB_REF_NAME" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+          if [[ "$GITHUB_HEAD_REF" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             export LATEST_TAG='latest'
           else
             export LATEST_TAG="`cat BRANCH_NAME`-latest"
