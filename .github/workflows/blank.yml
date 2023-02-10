@@ -32,6 +32,7 @@ jobs:
           else
             export LATEST_TAG="${GITHUB_REF_NAME}-latest"
           fi
+          
           echo "LATEST_TAG:" $LATEST_TAG
       
       - name: is node installed
