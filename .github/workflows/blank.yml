@@ -42,7 +42,7 @@ jobs:
           if [[ "$GITHUB_REF_NAME" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             export LATEST_TAG='latest'
           else
-            export LATEST_TAG="${`cat BRANCH_NAME`}-latest"
+            export LATEST_TAG="`cat BRANCH_NAME`-latest"
           fi
           
           echo "LATEST_TAG:" $LATEST_TAG
