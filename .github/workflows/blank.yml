@@ -35,13 +35,14 @@ jobs:
           fullBranchName = os.environ.get('GITHUB_REF_NAME')
           branchName = fullBranchName.split("/")[-1]
           os.environ['BRANCH_NAME'] = branchName
+          os.system('echo $BRANCH_NAME > BRANCH_NAME')
           
       - name: latest?
         run: |
           if [[ "$GITHUB_REF_NAME" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             export LATEST_TAG='latest'
           else
-            export LATEST_TAG="${BRANCH_NAME}-latest"
+            export LATEST_TAG="${`cat BRANCH_NAME`}-latest"
           fi
           
           echo "LATEST_TAG:" $LATEST_TAG
