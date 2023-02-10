@@ -4,9 +4,12 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
+    branches:
+      - main
   pull_request:
     types:
       - opened
+      - edited
       - synchronize
 
 
@@ -34,6 +37,8 @@ jobs:
           import os
           fullBranchName = os.environ.get('GITHUB_REF_NAME')
           branchName = fullBranchName.split("/")[-1]
+          print(branchName)
+          print(os.environ.get('GITHUB_ENV')
           os.environ['BRANCH_NAME'] = branchName
           os.system('echo $BRANCH_NAME > BRANCH_NAME')
           
