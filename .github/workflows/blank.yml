@@ -25,6 +25,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
+      - name: envs
+        run: printenv
+        
       - name: latest?
         run: |
           if [[ "$GITHUB_REF_NAME" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
