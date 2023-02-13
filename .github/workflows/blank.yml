@@ -36,18 +36,19 @@ jobs:
         run: |
           import os
           fullBranchName = os.environ.get('GITHUB_HEAD_REF')
-          branchName = fullBranchName.split("/")[-1]
-          print(branchName)
-          print(os.environ.get('GITHUB_ENV'))
-          os.environ['BRANCH_NAME'] = branchName
-          os.system('echo $BRANCH_NAME > BRANCH_NAME')
+          branchType = fullBranchName.split("/")[-2]
+          print("Branch name: ", fullBranchName)
+          print("Branch type: ", branchType)
+          os.environ['BRANCH_TYPE'] = branchType
+          os.system('echo BRANCH_TYPE=' + branchType + ' >> $GITHUB_ENV')
           
       - name: latest?
         run: |
+          printenv
           if [[ "$GITHUB_HEAD_REF" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
             export LATEST_TAG='latest'
           else
-            export LATEST_TAG="`cat BRANCH_NAME`-latest"
+            export LATEST_TAG="${BRANCH_TYPE}-latest"
           fi
           
           echo "LATEST_TAG:" $LATEST_TAG
