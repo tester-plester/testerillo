@@ -67,6 +67,9 @@ jobs:
       
       - name: is node installed
         run: node --version
+        
+      - name: is aws cli installed
+        run: aws --version
 
       - name: Save PR number
         env:
