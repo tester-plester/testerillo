@@ -28,6 +28,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'liberica'
+          java-version: '8'
+      
       - name: Where am I
         run: pwd
       
