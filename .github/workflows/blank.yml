@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Print commit sha
-        run: git log -n1
+        run: git log -n2
       
       - name: envs
         run: printenv
