@@ -57,6 +57,9 @@ jobs:
           os.system('echo BRANCH_TYPE=' + branchType + ' >> $GITHUB_ENV')
           os.system('echo BRANCH_NAME=' + branchName + ' >> $GITHUB_ENV')
           
+      - name: DEBUG versioning
+        run: echo 'GOP_VERSION="VVVVVV" >> $GITHUB_ENV'
+        
       - name: Set variables
         env:
           PR_NUMBER: ${{ github.event.number }}
