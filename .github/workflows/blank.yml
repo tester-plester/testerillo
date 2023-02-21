@@ -74,6 +74,8 @@ jobs:
           echo 'GOP_VERSION="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV'
           
           printf "\n\nGOP version: $GOP_VERSION\n\n"
+          echo "printing envs"
+          printenv
       
       - name: is node installed
         run: node --version
