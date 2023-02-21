@@ -48,22 +48,32 @@ jobs:
         run: |
           import os
           fullBranchName = os.environ.get('GITHUB_HEAD_REF')
-          branchType = fullBranchName.split("/")[-2]
-          print("Branch name: ", fullBranchName)
+          branchType = "none"
+          if len(fullBranchName.split("/")) >= 2:
+              branchType = fullBranchName.split("/")[-2]
+          branchName = fullBranchName.split("/")[-1]
+          print("Branch name: ", branchName)
           print("Branch type: ", branchType)
-          os.environ['BRANCH_TYPE'] = branchType
           os.system('echo BRANCH_TYPE=' + branchType + ' >> $GITHUB_ENV')
+          os.system('echo BRANCH_NAME=' + branchName + ' >> $GITHUB_ENV')
           
-      - name: latest?
-        run: |
-          printenv
-          if [[ "$GITHUB_HEAD_REF" != master ]] && [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            export LATEST_TAG='latest'
-          else
-            export LATEST_TAG="${BRANCH_TYPE}-latest"
+      - name: Set variables
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        run: |          
+          export GIT_SHORT_SHA=`git rev-parse --short ${GITHUB_SHA}`
+          echo 'GIT_SHORT_SHA=${GIT_SHORT_SHA} >> $GITHUB_ENV'
+
+          if [[ $GITHUB_EVENT_NAME = 'pull_request' ]]; then
+            export BRANCH_NAME="pr-${PR_NUMBER}"
           fi
+
+          echo 'BRANCH_NAME=${BRANCH_NAME} >> $GITHUB_ENV'
+          export GIT_SHORT_SHA
+          export GOP_VERSION="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}"
+          echo 'GOP_VERSION=${GOP_VERSION} >> $GITHUB_ENV'
           
-          echo "LATEST_TAG:" $LATEST_TAG
+          printf "\n\nGOP version: $GOP_VERSION\n\n"
       
       - name: is node installed
         run: node --version
@@ -76,6 +86,9 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
         run: |
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          
+      - name: envs
+        run: printenv
           
       - name: view
         run: |
