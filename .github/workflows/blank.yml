@@ -71,7 +71,7 @@ jobs:
           echo 'BRANCH_NAME=${BRANCH_NAME} >> $GITHUB_ENV'
           export GIT_SHORT_SHA
           GOP_VERSION="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}"
-          echo 'GOP_VER="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV'
+          echo 'TTTTTT="VVVVVV" >> $GITHUB_ENV'
           
           echo "GOP version: ${GOP_VERSION}"
           echo "printing envs"
