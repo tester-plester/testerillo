@@ -16,12 +16,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      NodeVersion:
+      nodeVersion:
         description: 'Node version'     
         required: true
         default: '12'
-      tags:
-        description: 'Node version to be used for building'  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -40,7 +38,10 @@ jobs:
         with:
           distribution: 'liberica'
           java-version: '8'
-      
+          
+      - name: Print given Node version
+        run: echo $nodeVersion
+        
       - name: Where am I
         run: pwd
       
