@@ -42,6 +42,13 @@ jobs:
       - name: Print given Node version
         run: echo "Node version is ${{ github.event.inputs.nodeVersion }}"
         
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ github.event.inputs.nodeVersion }}
+          registry-url: 'https://npm.pkg.github.com'
+          cache: 'yarn'
+        
       - name: Where am I
         run: pwd
       
