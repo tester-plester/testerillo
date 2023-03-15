@@ -40,7 +40,7 @@ jobs:
           java-version: '8'
           
       - name: Print given Node version
-        run: echo ${{ github.event.inputs.nodeVersion }}
+        run: echo "Node version is ${{ github.event.inputs.nodeVersion }}"
         
       - name: Where am I
         run: pwd
