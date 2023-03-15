@@ -42,7 +42,7 @@ jobs:
       - name: Print given Node version
         run: |
           echo "Requested Node version is ${{ github.event.inputs.nodeVersion }}"
-          echo node --version
+          node --version
         
       - name: Setup Node
         uses: actions/setup-node@v3
