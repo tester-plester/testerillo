@@ -28,11 +28,11 @@ on:
         options:
           - "STAGE"
           - "PROD"
-      1_version:
+      a_version:
         description: 'Set some version to be deployed'
         required: true
         default: '8.0.1'
-      2_version:
+      b_version:
         description: 'Set some other version to be deployed'
         required: true
         default: '3.0.3'
@@ -70,7 +70,7 @@ jobs:
         
       - name: Set application description
         run: |
-          DESCRIPTION="${{ github.event.inputs.environment }}_GOP_${{ github.event.inputs.1_version }}_DS2_${{ github.event.inputs.2_version }}_R_${GITHUB_RUN_NUMBER}"
+          DESCRIPTION="${{ github.event.inputs.environment }}_GOP_${{ github.event.inputs.a_version }}_DS2_${{ github.event.inputs.b_version }}_R_${GITHUB_RUN_NUMBER}"
           echo DESCRIPTION=$DESCRIPTION >> $GITHUB_ENV
           
       - name: See the description
