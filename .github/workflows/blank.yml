@@ -70,7 +70,7 @@ jobs:
         
       - name: Set application description
         run: |
-          DESCRIPTION="${{ github.event.inputs.environment }}_GOP_${{ github.event.inputs.gop_version }}_DS2_${{ github.event.inputs.ds2_version }}_R_${GITHUB_RUN_NUMBER}"
+          DESCRIPTION="${{ github.event.inputs.environment }}_GOP_${{ github.event.inputs.1_version }}_DS2_${{ github.event.inputs.2_version }}_R_${GITHUB_RUN_NUMBER}"
           echo DESCRIPTION=$DESCRIPTION >> $GITHUB_ENV
           
       - name: See the description
