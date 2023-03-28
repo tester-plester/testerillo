@@ -20,6 +20,22 @@ on:
         description: 'Node version'     
         required: true
         default: '12'
+      environment:
+        description: 'Generate config for which env'
+        required: false
+        default: 'STAGE'
+        type: choice
+        options:
+          - "STAGE"
+          - "PROD"
+      1_version:
+        description: 'Set some version to be deployed'
+        required: true
+        default: '8.0.1'
+      2_version:
+        description: 'Set some other version to be deployed'
+        required: true
+        default: '3.0.3'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -52,8 +68,13 @@ jobs:
       - name: Print installed Node version
         run: node --version
         
-      - name: Where am I
-        run: pwd
+      - name: Set application description
+        run: |
+          DESCRIPTION="${{ env.github.event.inputs.environment }}_GOP_${{ env.github.event.inputs.gop_version }}_DS2_${{ env.github.event.inputs.ds2_version }}_R_${GITHUB_RUN_NUMBER}"
+          echo DESCRIPTION=$DESCRIPTION >> $GITHUB_ENV
+          
+      - name: See the description
+        run: echo $DESCRIPTION
       
       - name: Print commit short sha
         run: git rev-parse --short ${GITHUB_SHA}
