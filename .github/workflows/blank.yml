@@ -49,6 +49,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
+      - name: Show last 3 commits
+        run: git log -3
+
+      - name: Commit sha
+        run: git rev-parse HEAD
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -127,18 +133,26 @@ jobs:
       - name: is aws cli installed
         run: aws --version
 
+      - name: Show envs
+        run: printenv
+        
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.number }}
         run: |
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-          
+
+      - name: Create docker tag on PR
+        if: github.event_name == 'pull_request'
+        run: echo "DOCKER_TAG=-PR${{ github.event.number }}-B$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+
       - name: envs
         run: printenv
           
       - name: view
         run: |
           echo ${GITHUB_REPOSITORY}
+          echo ${DOCKER_TAG}
           echo "***************"
           echo $GITHUB_ENV
           echo "--------"
