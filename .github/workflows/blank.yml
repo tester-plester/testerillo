@@ -28,6 +28,9 @@ jobs:
       - name: Commit sha
         run: git rev-parse HEAD
 
+      - name: Show envs
+        run: printenv
+        
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.number }}
