@@ -49,39 +49,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'liberica'
-          java-version: '8'
-          
-      - name: Print given Node version
-        run: |
-          echo "Requested Node version is ${{ github.event.inputs.nodeVersion }}"
-          node --version
-        
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ github.event.inputs.nodeVersion }}
-          
-      - name: Print installed Node version
-        run: node --version
-        
-      - name: Set application description
-        run: |
-          DESCRIPTION="${{ github.event.inputs.environment }}_GOP_${{ github.event.inputs.a_version }}_DS2_${{ github.event.inputs.b_version }}_R_${GITHUB_RUN_NUMBER}"
-          echo DESCRIPTION=$DESCRIPTION >> $GITHUB_ENV
-          
-      - name: See the description
-        run: echo $DESCRIPTION
-      
-      - name: Print commit short sha
-        run: git rev-parse --short ${GITHUB_SHA}
-      
-      - name: envs
-        run: printenv
-        
       - name: Get branch name
         shell: python
         run: |
@@ -96,50 +63,16 @@ jobs:
           os.system('echo BRANCH_TYPE=' + branchType + ' >> $GITHUB_ENV')
           os.system('echo BRANCH_NAME=' + branchName + ' >> $GITHUB_ENV')
           
-      - name: DEBUG versioning
-        run: echo GOP_VERSION="VVVVVV" >> $GITHUB_ENV
-        
-      - name: Set variables
-        env:
-          PR_NUMBER: ${{ github.event.number }}
-        run: |          
-          export GIT_SHORT_SHA=`git rev-parse --short ${GITHUB_SHA}`
-          echo 'GIT_SHORT_SHA=${GIT_SHORT_SHA} >> $GITHUB_ENV'
-
-          echo 'GOP_VERSION="VVVVVV" >> $GITHUB_ENV'
-          
-          if [[ $GITHUB_EVENT_NAME = 'pull_request' ]]; then
-            export BRANCH_NAME="pr-${PR_NUMBER}"
-          fi
-
-          echo 'BRANCH_NAME=${BRANCH_NAME} >> $GITHUB_ENV'
-          export GIT_SHORT_SHA
-          GOP_VERSION="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}"
-          echo 'TTTTTT="VVVVVV" >> $GITHUB_ENV'
-          
-          echo "GOP version: ${GOP_VERSION}"
-          echo "printing envs"
-          printenv
-      
-      - name: is node installed
-        run: node --version
-        
-      - name: is aws cli installed
-        run: aws --version
-
-      - name: Save PR number
-        env:
-          PR_NUMBER: ${{ github.event.number }}
-        run: |
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-          
       - name: envs
         run: printenv
           
-      - name: view
-        run: |
-          echo ${GITHUB_REPOSITORY}
-          echo "***************"
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/release' 
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Hello
+        run: printenv
           echo $GITHUB_ENV
           echo "--------"
           printenv
