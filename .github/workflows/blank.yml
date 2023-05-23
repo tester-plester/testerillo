@@ -124,7 +124,7 @@ jobs:
           printenv
 
 
-  release:
+  runs_when_3_things_are_met_for_release:
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, "release/v") && github.base_ref == "main"
     runs-on: ubuntu-22.04
 
