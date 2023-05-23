@@ -11,6 +11,7 @@ on:
       - opened
       - edited
       - synchronize
+      - closed
 
 
   # Allows you to run this workflow manually from the Actions tab
@@ -80,7 +81,9 @@ jobs:
         run: git rev-parse --short ${GITHUB_SHA}
       
       - name: envs
-        run: printenv
+        run: |
+          cat /home/runner/work/_temp/_github_workflow/event.json
+          printenv
         
       - name: Get branch name
         shell: python
@@ -96,30 +99,6 @@ jobs:
           os.system('echo BRANCH_TYPE=' + branchType + ' >> $GITHUB_ENV')
           os.system('echo BRANCH_NAME=' + branchName + ' >> $GITHUB_ENV')
           
-      - name: DEBUG versioning
-        run: echo GOP_VERSION="VVVVVV" >> $GITHUB_ENV
-        
-      - name: Set variables
-        env:
-          PR_NUMBER: ${{ github.event.number }}
-        run: |          
-          export GIT_SHORT_SHA=`git rev-parse --short ${GITHUB_SHA}`
-          echo 'GIT_SHORT_SHA=${GIT_SHORT_SHA} >> $GITHUB_ENV'
-
-          echo 'GOP_VERSION="VVVVVV" >> $GITHUB_ENV'
-          
-          if [[ $GITHUB_EVENT_NAME = 'pull_request' ]]; then
-            export BRANCH_NAME="pr-${PR_NUMBER}"
-          fi
-
-          echo 'BRANCH_NAME=${BRANCH_NAME} >> $GITHUB_ENV'
-          export GIT_SHORT_SHA
-          GOP_VERSION="${BRANCH_NAME}-${GIT_SHORT_SHA}-${GITHUB_RUN_NUMBER}"
-          echo 'TTTTTT="VVVVVV" >> $GITHUB_ENV'
-          
-          echo "GOP version: ${GOP_VERSION}"
-          echo "printing envs"
-          printenv
       
       - name: is node installed
         run: node --version
