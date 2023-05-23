@@ -125,7 +125,7 @@ jobs:
 
 
   release:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, "release/v") && github.base_ref == "main"
     runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
