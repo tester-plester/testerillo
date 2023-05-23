@@ -143,3 +143,21 @@ jobs:
           echo $GITHUB_ENV
           echo "--------"
           printenv
+
+
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - 
+        name: envs
+        run: |
+          cat /home/runner/work/_temp/_github_workflow/event.json
+          echo "printing envs"
+          printenv
+
