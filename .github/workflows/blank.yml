@@ -82,9 +82,9 @@ jobs:
       
       - name: envs
         run: |
-          echo github.event.pull_request.merged
-          echo github.head_ref
-          echo github.base_ref
+          echo GITHUB.event.pull_request.merged
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_BASE_REF
           echo "**************"
           cat /home/runner/work/_temp/_github_workflow/event.json
           printenv
